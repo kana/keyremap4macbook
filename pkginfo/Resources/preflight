@@ -1,0 +1,13 @@
+#!/bin/sh
+PATH=/bin:/sbin:/usr/bin:/usr/sbin; export PATH
+
+# unload before install
+startup="/Applications/KeyRemap4MacBook/scripts/startup.sh"
+[ -f "$startup" ] && "$startup" stop
+
+startup="/Library/org.pqrs/KeyRemap4MacBook/scripts/startup.sh"
+[ -f "$startup" ] && "$startup" stop
+
+launchctl unload /Library/LaunchDaemons/org.pqrs.KeyRemap4MacBook.server.plist
+
+exit 0
