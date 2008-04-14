@@ -682,6 +682,15 @@ namespace org_pqrs_KeyRemap4MacBook {
   }
 
   void
+  remap_shiftR2shiftR_backslash(const RemapParams &params)
+  {
+    if (! config.remap_shiftR2shiftR_backslash) return;
+
+    static KeyOverlayedModifier kom;
+    kom.remap(params, KeyCode::SHIFT_R, ModifierFlag::SHIFT_R, FireFunc::firefunc_backslash);
+  }
+
+  void
   remap_shiftR2escape(const RemapParams &params)
   {
     if (! config.remap_shiftR2escape) return;
@@ -1777,6 +1786,7 @@ org_pqrs_KeyRemap4MacBook::remap_core(const RemapParams &params)
   remap_shiftR2controlL(params);
   remap_shiftR2fn(params);
   remap_shiftR2optionL(params);
+  remap_shiftR2shiftR_backslash(params);
   remap_shiftR2escape(params);
   remap_shiftR2space(params);
   remap_shiftR2uparrow(params);
