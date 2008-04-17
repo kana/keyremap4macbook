@@ -263,6 +263,24 @@ namespace org_pqrs_KeyRemap4MacBook {
   }
 
   void
+  remap_enter2optionR(const RemapParams &params)
+  {
+    if (! config.remap_enter2optionR) return;
+
+    RemapUtil::keyToModifier(params, RemapUtil::getEnterKeyCode(params), ModifierFlag::OPTION_R);
+  }
+
+  void
+  remap_enter2optionR_commandSpace(const RemapParams &params)
+  {
+    if (! config.remap_enter2optionR_commandSpace) return;
+
+    static KeyOverlayedModifier kom;
+    KeyCode::KeyCode fromKeyCode = RemapUtil::getEnterKeyCode(params);
+    kom.remap(params, fromKeyCode, ModifierFlag::OPTION_R, FireFunc::firefunc_commandSpace);
+  }
+
+  void
   remap_enter2commandLcontrolL(const RemapParams &params)
   {
     if (! config.remap_enter2commandLcontrolL) return;
@@ -493,6 +511,15 @@ namespace org_pqrs_KeyRemap4MacBook {
 
     RemapUtil::modifierToModifier(params, ModifierFlag::OPTION_R, ModifierFlag::FN);
     RemapUtil::toFN(params);
+  }
+
+  void
+  remap_optionR2optionR_commandSpace(const RemapParams &params)
+  {
+    if (! config.remap_optionR2optionR_commandSpace) return;
+
+    static KeyOverlayedModifier kom;
+    kom.remap(params, KeyCode::OPTION_R, ModifierFlag::OPTION_R, FireFunc::firefunc_commandSpace);
   }
 
   void
@@ -857,9 +884,27 @@ namespace org_pqrs_KeyRemap4MacBook {
   }
 
   void
+  remap_keypadnumlock_togglekey_clear(const RemapParams &params)
+  {
+    if (! config.option_keypadnumlock_togglekey_clear) return;
+
+    static bool keypadnumlock = true;
+    if (params.ex_origKey == KeyCode::KEYPAD_CLEAR) {
+      if (*(params.eventType) == KeyEvent::DOWN) {
+        config.remap_keypadnumlock = keypadnumlock;
+        keypadnumlock = ! keypadnumlock;
+
+        *(params.ex_dropKey) = true;
+      }
+    }
+  }
+
+  void
   remap_pclikehomeend(const RemapParams &params)
   {
     if (! config.remap_pclikehomeend) return;
+
+    if ((params.activeApplicationInfo)->is_virtualmachine) return;
 
     bool replaced = false;
 
@@ -885,72 +930,103 @@ namespace org_pqrs_KeyRemap4MacBook {
     static ModifierCanceling mc_control;
     static ModifierCanceling mc_option;
 
-    bool ignore = ((params.activeApplicationInfo)->is_emacs) || ((params.activeApplicationInfo)->is_terminal);
+    bool is_terminal = ((params.activeApplicationInfo)->is_emacs || (params.activeApplicationInfo)->is_terminal);
+    bool is_virtualmachine = ((params.activeApplicationInfo)->is_virtualmachine);
+    bool is_x11 = ((params.activeApplicationInfo)->is_x11);
+
+    bool ignore = is_terminal || is_virtualmachine || is_x11;
 
     if (allFlagStatus.controlL.isHeldDown()) {
       bool cancel_control = false;
 
       // Control+D -> FORWARD_DELETE
-      if (config.option_emacsmode_controlD && *(params.key) == KeyCode::D && ! ignore) {
-        *(params.key) = KeyCode::FORWARD_DELETE;
-        cancel_control = true;
+      if (config.option_emacsmode_controlD && *(params.key) == KeyCode::D) {
+        bool doremap = ! ignore;
+        if (is_terminal && config.option_emacsmode_force_controlD_term) doremap = true;
+        if (is_x11 && config.option_emacsmode_force_controlD_x11) doremap = true;
+        if (is_virtualmachine && config.option_emacsmode_force_controlD_vm) doremap = true;
+
+        if (doremap) {
+          *(params.key) = KeyCode::FORWARD_DELETE;
+          cancel_control = true;
+        }
       }
       // Control+H -> DELETE
-      if (config.option_emacsmode_controlH && *(params.key) == KeyCode::H && ! ignore) {
-        *(params.key) = KeyCode::DELETE;
-        cancel_control = true;
+      if (config.option_emacsmode_controlH && *(params.key) == KeyCode::H) {
+        bool doremap = ! ignore;
+        if (is_terminal && config.option_emacsmode_force_controlH_term) doremap = true;
+        if (is_x11 && config.option_emacsmode_force_controlH_x11) doremap = true;
+        if (is_virtualmachine && config.option_emacsmode_force_controlH_vm) doremap = true;
+
+        if (doremap) {
+          *(params.key) = KeyCode::DELETE;
+          cancel_control = true;
+        }
       }
       // Control+I -> TAB
       if (config.option_emacsmode_controlI && *(params.key) == KeyCode::I) {
-        if (! ignore || config.option_emacsmode_force_controlI) {
+        bool doremap = ! ignore;
+        if (is_terminal && config.option_emacsmode_force_controlI_term) doremap = true;
+        if (is_x11 && config.option_emacsmode_force_controlI_x11) doremap = true;
+        if (is_virtualmachine && config.option_emacsmode_force_controlI_vm) doremap = true;
+
+        if (doremap) {
           *(params.key) = KeyCode::TAB;
           cancel_control = true;
         }
       }
       // Control+M -> RETURN
       if (config.option_emacsmode_controlM && *(params.key) == KeyCode::M) {
-        if (! ignore || config.option_emacsmode_force_controlM) {
+        bool doremap = ! ignore;
+        if (is_terminal && config.option_emacsmode_force_controlM_term) doremap = true;
+        if (is_x11 && config.option_emacsmode_force_controlM_x11) doremap = true;
+        if (is_virtualmachine && config.option_emacsmode_force_controlM_vm) doremap = true;
+
+        if (doremap) {
           *(params.key) = KeyCode::RETURN;
           cancel_control = true;
         }
       }
       // Control+[ -> ESCAPE
       if (config.option_emacsmode_controlLeftbracket && *(params.key) == KeyCode::BRACKET_LEFT) {
-        if (! ignore || config.option_emacsmode_force_controlLeftbracket) {
+        bool doremap = ! ignore;
+        if (is_terminal && config.option_emacsmode_force_controlLeftbracket_term) doremap = true;
+        if (is_x11 && config.option_emacsmode_force_controlLeftbracket_x11) doremap = true;
+        if (is_virtualmachine && config.option_emacsmode_force_controlLeftbracket_vm) doremap = true;
+
+        if (doremap) {
           *(params.key) = KeyCode::ESCAPE;
           cancel_control = true;
         }
       }
-      // Control+P -> UP
-      if (config.option_emacsmode_controlPNBF && *(params.key) == KeyCode::P) {
-        if (! ignore || config.option_emacsmode_force_controlPNBF) {
-          *(params.key) = KeyCode::CURSOR_UP;
-          allFlagStatus.cursor = true;
-          cancel_control = true;
-        }
-      }
-      // Control+N -> DOWN
-      if (config.option_emacsmode_controlPNBF && *(params.key) == KeyCode::N) {
-        if (! ignore || config.option_emacsmode_force_controlPNBF) {
-          *(params.key) = KeyCode::CURSOR_DOWN;
-          allFlagStatus.cursor = true;
-          cancel_control = true;
-        }
-      }
-      // Control+B -> LEFT
-      if (config.option_emacsmode_controlPNBF && *(params.key) == KeyCode::B) {
-        if (! ignore || config.option_emacsmode_force_controlPNBF) {
-          *(params.key) = KeyCode::CURSOR_LEFT;
-          allFlagStatus.cursor = true;
-          cancel_control = true;
-        }
-      }
-      // Control+F -> RIGHT
-      if (config.option_emacsmode_controlPNBF && *(params.key) == KeyCode::F) {
-        if (! ignore || config.option_emacsmode_force_controlPNBF) {
-          *(params.key) = KeyCode::CURSOR_RIGHT;
-          allFlagStatus.cursor = true;
-          cancel_control = true;
+      // Control+PNBF -> UP/Down/Left/Right
+      if (config.option_emacsmode_controlPNBF) {
+        bool doremap = ! ignore;
+        if (is_terminal && config.option_emacsmode_force_controlPNBF_term) doremap = true;
+        if (is_x11 && config.option_emacsmode_force_controlPNBF_x11) doremap = true;
+        if (is_virtualmachine && config.option_emacsmode_force_controlPNBF_vm) doremap = true;
+
+        if (doremap) {
+          if (*(params.key) == KeyCode::P) {
+            *(params.key) = KeyCode::CURSOR_UP;
+            allFlagStatus.cursor = true;
+            cancel_control = true;
+          }
+          if (*(params.key) == KeyCode::N) {
+            *(params.key) = KeyCode::CURSOR_DOWN;
+            allFlagStatus.cursor = true;
+            cancel_control = true;
+          }
+          if (*(params.key) == KeyCode::B) {
+            *(params.key) = KeyCode::CURSOR_LEFT;
+            allFlagStatus.cursor = true;
+            cancel_control = true;
+          }
+          if (*(params.key) == KeyCode::F) {
+            *(params.key) = KeyCode::CURSOR_RIGHT;
+            allFlagStatus.cursor = true;
+            cancel_control = true;
+          }
         }
       }
       // Control+V -> PAGEDOWN
@@ -964,38 +1040,52 @@ namespace org_pqrs_KeyRemap4MacBook {
         allFlagStatus.commandL.temporary_increase();
         cancel_control = true;
       }
-      // Control+A -> Command+LEFT
-      if (config.option_emacsmode_controlAE && *(params.key) == KeyCode::A && ! ignore) {
-        *(params.key) = KeyCode::CURSOR_LEFT;
-        allFlagStatus.cursor = true;
-        allFlagStatus.commandL.temporary_increase();
-        cancel_control = true;
+      // Control+AE -> Command+LEFT/Right
+      if (config.option_emacsmode_controlAE) {
+        if (! ignore) {
+          if (*(params.key) == KeyCode::A) {
+            *(params.key) = KeyCode::CURSOR_LEFT;
+            allFlagStatus.cursor = true;
+            allFlagStatus.commandL.temporary_increase();
+            cancel_control = true;
+          }
+          if (*(params.key) == KeyCode::E) {
+            *(params.key) = KeyCode::CURSOR_RIGHT;
+            allFlagStatus.cursor = true;
+            allFlagStatus.commandL.temporary_increase();
+            cancel_control = true;
+          }
+        }
       }
-      // Control+E -> Command+RIGHT
-      if (config.option_emacsmode_controlAE && *(params.key) == KeyCode::E && ! ignore) {
-        *(params.key) = KeyCode::CURSOR_RIGHT;
-        allFlagStatus.cursor = true;
-        allFlagStatus.commandL.temporary_increase();
-        cancel_control = true;
+      // Control+AE -> HOME/END (in VirtualMachine)
+      if (is_virtualmachine && config.option_emacsmode_controlAE_vm) {
+        if (*(params.key) == KeyCode::A) {
+          *(params.key) = KeyCode::HOME;
+          cancel_control = true;
+        }
+        if (*(params.key) == KeyCode::E) {
+          *(params.key) = KeyCode::END;
+          cancel_control = true;
+        }
       }
-      // Control+Q -> PAGEUP (force remap in Emacs)
-      if (config.option_emacsmode_ex_controlQ && *(params.key) == KeyCode::Q) {
+      // Control+Q -> PAGEUP
+      if (config.option_emacsmode_ex_controlQ && *(params.key) == KeyCode::Q && ! ignore) {
         *(params.key) = KeyCode::PAGEUP;
         cancel_control = true;
       }
-      // Control+W -> Option+DELETE (force remap in Emacs)
-      if (config.option_emacsmode_ex_controlW && *(params.key) == KeyCode::W) {
+      // Control+W -> Option+DELETE
+      if (config.option_emacsmode_ex_controlW && *(params.key) == KeyCode::W && ! ignore) {
         *(params.key) = KeyCode::DELETE;
         allFlagStatus.optionL.temporary_increase();
         cancel_control = true;
       }
-      // Control+1 -> HOME (force remap in Emacs)
-      if (config.option_emacsmode_ex_control12 && *(params.key) == KeyCode::KEY_1) {
+      // Control+1 -> HOME
+      if (config.option_emacsmode_ex_control12 && *(params.key) == KeyCode::KEY_1 && ! ignore) {
         *(params.key) = KeyCode::HOME;
         cancel_control = true;
       }
-      // Control+2 -> END (force remap in Emacs)
-      if (config.option_emacsmode_ex_control12 && *(params.key) == KeyCode::KEY_2) {
+      // Control+2 -> END
+      if (config.option_emacsmode_ex_control12 && *(params.key) == KeyCode::KEY_2 && ! ignore) {
         *(params.key) = KeyCode::END;
         cancel_control = true;
       }
@@ -1686,7 +1776,7 @@ void
 org_pqrs_KeyRemap4MacBook::remap_core(const RemapParams &params)
 {
   if (config.debug) {
-    printf("caught  hid event type %d flags 0x%x key %d ",  *(params.eventType), *(params.flags), *(params.key));
+    printf("caught hid event type %d flags 0x%x key %d ",  *(params.eventType), *(params.flags), *(params.key));
     printf("charCode %d charSet %d ", *(params.charCode), *(params.charSet));
     printf("origCharCode %d origCharSet %d kbdType %d\n",
            *(params.origCharCode), *(params.origCharSet), *(params.keyboardType));
@@ -1731,6 +1821,7 @@ org_pqrs_KeyRemap4MacBook::remap_core(const RemapParams &params)
   remap_enter2controlR(params);
   remap_enter2fn(params);
   remap_enter2optionL(params);
+  remap_enter2optionR(params);
   remap_enter2commandLcontrolL(params);
   remap_enter2commandLshiftL(params);
   remap_enter2controlLoptionL(params);
@@ -1761,6 +1852,7 @@ org_pqrs_KeyRemap4MacBook::remap_core(const RemapParams &params)
   remap_optionR2controlL(params);
   remap_optionR2controlR(params);
   remap_optionR2fn(params);
+  remap_optionR2optionR_commandSpace(params);
   remap_optionR2enter(params);
   remap_optionR2forwarddelete(params);
   remap_optionR2semicolon(params);
@@ -1810,6 +1902,7 @@ org_pqrs_KeyRemap4MacBook::remap_core(const RemapParams &params)
   remap_pc_application2f11(params);
 
   remap_keypadnumlock(params);
+  remap_keypadnumlock_togglekey_clear(params);
 
   // ----------------------------------------
   remap_hhkmode(params);
@@ -1874,6 +1967,7 @@ org_pqrs_KeyRemap4MacBook::remap_core(const RemapParams &params)
   // *** Note: we need to call remap_space2shift, remap_enter2optionL_commandSpace (has SandS like behavior) as possible late. ***
   // *** If any keyToModifier or modifierToKey remappings are enabled, miss-cancelling are occured. ***
   remap_enter2optionL_commandSpace(params);
+  remap_enter2optionR_commandSpace(params);
   remap_space2controlL_space(params);
   remap_space2shiftL_space(params);
   remap_jis_commandR2commandR_kana(params);

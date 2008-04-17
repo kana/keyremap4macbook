@@ -183,7 +183,8 @@ namespace org_pqrs_KeyRemap4MacBook {
   RemapUtil::getEnterKeyCode(const RemapParams &params)
   {
     if (*(params.keyboardType) == KeyboardType::POWERBOOK ||
-        *(params.keyboardType) == KeyboardType::POWERBOOK_G4) {
+        *(params.keyboardType) == KeyboardType::POWERBOOK_G4 ||
+        *(params.keyboardType) == KeyboardType::POWERBOOK_G4_TI) {
       return KeyCode::ENTER_POWERBOOK;
     }
     return KeyCode::ENTER;
@@ -195,6 +196,7 @@ namespace org_pqrs_KeyRemap4MacBook {
     if (keyboardType == KeyboardType::MACBOOK_COREDUO) return true;
     if (keyboardType == KeyboardType::POWERBOOK) return true;
     if (keyboardType == KeyboardType::POWERBOOK_G4) return true;
+    if (keyboardType == KeyboardType::POWERBOOK_G4_TI) return true;
     if (keyboardType == KeyboardType::JIS_MACBOOK) return true;
     return false;
   }
@@ -630,7 +632,7 @@ namespace org_pqrs_KeyRemap4MacBook {
   void
   ListFireExtraKey::fire(FireExtraKey::Type type, KeyboardEventCallback callback,
                          OSObject *target,
-                         unsigned int charSet, unsigned int origCharCode, unsigned int origCharSet, unsigned int keyboardType, AbsoluteTime ts,
+                         unsigned int charSet, unsigned int origCharCode, unsigned int origCharSet, AbsoluteTime ts,
                          OSObject *sender, void *refcon)
   {
     if (callback == NULL) return;
@@ -641,7 +643,7 @@ namespace org_pqrs_KeyRemap4MacBook {
       if (item.isEnable() && item.getType() == type) {
         callback(target, item.getEventType(), item.getFlags(), item.getKey(), item.getCharCode(),
                  charSet, origCharCode, origCharSet,
-                 keyboardType, false, ts, sender, refcon);
+                 KeyboardType::MACBOOK, false, ts, sender, refcon);
       }
     }
   }

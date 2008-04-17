@@ -222,6 +222,14 @@
           <sysctl>keyremap4macbook.remap.enter2optionL_commandSpace</sysctl>
         </item>
         <item>
+          <name>Enter to Option_R</name>
+          <sysctl>keyremap4macbook.remap.enter2optionR</sysctl>
+        </item>
+        <item>
+          <name>Enter to Option_R (+ When you type Enter only, fire Command+Space)</name>
+          <sysctl>keyremap4macbook.remap.enter2optionR_commandSpace</sysctl>
+        </item>
+        <item>
           <name>Enter to Command_L+Control_L</name>
           <sysctl>keyremap4macbook.remap.enter2commandLcontrolL</sysctl>
         </item>
@@ -350,6 +358,10 @@
         <item>
           <name>Option_R to FN</name>
           <sysctl>keyremap4macbook.remap.optionR2fn</sysctl>
+        </item>
+        <item>
+          <name>Option_R to Option_R (+ When you type Enter only, fire Command+Space)</name>
+          <sysctl>keyremap4macbook.remap.optionR2optionR_commandSpace</sysctl>
         </item>
         <item>
           <name>Option_R to Enter</name>
@@ -558,23 +570,118 @@
           <sysctl>keyremap4macbook.option.emacsmode_ex_controlW</sysctl>
         </item>
         <item>
-          <name>Behavior in Emacs, Terminal</name>
+          <name>Behavior in Emacs, Terminal, X11, VMware, Parallels, RDC</name>
           <list>
             <item>
+              <name>Force remap C-d to Forward Delete</name>
+              <list>
+                <item>
+                  <name>In Emacs, Terminal</name>
+                  <sysctl>keyremap4macbook.option.emacsmode_force_controlD_term</sysctl>
+                </item>
+                <item>
+                  <name>In X11</name>
+                  <sysctl>keyremap4macbook.option.emacsmode_force_controlD_x11</sysctl>
+                </item>
+                <item>
+                  <name>In VMware Fusion, Parallels Desktop, Remote Desktop Connection</name>
+                  <sysctl>keyremap4macbook.option.emacsmode_force_controlD_vm</sysctl>
+                </item>
+              </list>
+            </item>
+            <item>
+              <name>Force remap C-h to Delete</name>
+              <list>
+                <item>
+                  <name>In Emacs, Terminal</name>
+                  <sysctl>keyremap4macbook.option.emacsmode_force_controlH_term</sysctl>
+                </item>
+                <item>
+                  <name>In X11</name>
+                  <sysctl>keyremap4macbook.option.emacsmode_force_controlH_x11</sysctl>
+                </item>
+                <item>
+                  <name>In VMware Fusion, Parallels Desktop, Remote Desktop Connection</name>
+                  <sysctl>keyremap4macbook.option.emacsmode_force_controlH_vm</sysctl>
+                </item>
+              </list>
+            </item>
+            <item>
               <name>Force remap C-i to Tab</name>
-              <sysctl>keyremap4macbook.option.emacsmode_force_controlI</sysctl>
+              <list>
+                <item>
+                  <name>In Emacs, Terminal</name>
+                  <sysctl>keyremap4macbook.option.emacsmode_force_controlI_term</sysctl>
+                </item>
+                <item>
+                  <name>In X11</name>
+                  <sysctl>keyremap4macbook.option.emacsmode_force_controlI_x11</sysctl>
+                </item>
+                <item>
+                  <name>In VMware Fusion, Parallels Desktop, Remote Desktop Connection</name>
+                  <sysctl>keyremap4macbook.option.emacsmode_force_controlI_vm</sysctl>
+                </item>
+              </list>
             </item>
             <item>
               <name>Force remap C-m to Return</name>
-              <sysctl>keyremap4macbook.option.emacsmode_force_controlM</sysctl>
+              <list>
+                <item>
+                  <name>In Emacs, Terminal</name>
+                  <sysctl>keyremap4macbook.option.emacsmode_force_controlM_term</sysctl>
+                </item>
+                <item>
+                  <name>In X11</name>
+                  <sysctl>keyremap4macbook.option.emacsmode_force_controlM_x11</sysctl>
+                </item>
+                <item>
+                  <name>In VMware Fusion, Parallels Desktop, Remote Desktop Connection</name>
+                  <sysctl>keyremap4macbook.option.emacsmode_force_controlM_vm</sysctl>
+                </item>
+              </list>
             </item>
             <item>
               <name>Force remap C-[ to Escape</name>
-              <sysctl>keyremap4macbook.option.emacsmode_force_controlLeftbracket</sysctl>
+              <list>
+                <item>
+                  <name>In Emacs, Terminal</name>
+                  <sysctl>keyremap4macbook.option.emacsmode_force_controlLeftbracket_term</sysctl>
+                </item>
+                <item>
+                  <name>In X11</name>
+                  <sysctl>keyremap4macbook.option.emacsmode_force_controlLeftbracket_x11</sysctl>
+                </item>
+                <item>
+                  <name>In VMware Fusion, Parallels Desktop, Remote Desktop Connection</name>
+                  <sysctl>keyremap4macbook.option.emacsmode_force_controlLeftbracket_vm</sysctl>
+                </item>
+              </list>
             </item>
             <item>
               <name>Force remap C-pnbf to Up/Down/Left/Right</name>
-              <sysctl>keyremap4macbook.option.emacsmode_force_controlPNBF</sysctl>
+              <list>
+                <item>
+                  <name>In Emacs, Terminal</name>
+                  <sysctl>keyremap4macbook.option.emacsmode_force_controlPNBF_term</sysctl>
+                </item>
+                <item>
+                  <name>In X11</name>
+                  <sysctl>keyremap4macbook.option.emacsmode_force_controlPNBF_x11</sysctl>
+                </item>
+                <item>
+                  <name>In VMware Fusion, Parallels Desktop, Remote Desktop Connection</name>
+                  <sysctl>keyremap4macbook.option.emacsmode_force_controlPNBF_vm</sysctl>
+                </item>
+              </list>
+            </item>
+            <item>
+              <name>Control_L+AE to Home/End</name>
+              <list>
+                <item>
+                  <name>In VMware Fusion, Parallels Desktop, Remote Desktop Connection</name>
+                  <sysctl>keyremap4macbook.option.emacsmode_controlAE_vm</sysctl>
+                </item>
+              </list>
             </item>
           </list>
         </item>
@@ -634,8 +741,13 @@
       <name>Remapping for Applications</name>
       <list>
         <item>
-          <name>Remap Command+Space to Option+Backquote(`) at VMware Fusion, Parallels Desktop</name>
-          <sysctl>keyremap4macbook.remap.app_vm_commandspace2optionbackquote</sysctl>
+          <name>Enable at only VMware Fusion, Parallels Desktop, Remote Desktop Connection</name>
+          <list>
+            <item>
+              <name>Remap Command+Space to Option+Backquote(`)</name>
+              <sysctl>keyremap4macbook.remap.app_vm_commandspace2optionbackquote</sysctl>
+            </item>
+          </list>
         </item>
       </list>
     </item>
@@ -692,7 +804,16 @@
         </item>
         <item>
           <name>Use KeyPad as Arrow (PC Style NumLock)</name>
-          <sysctl>keyremap4macbook.remap.keypadnumlock</sysctl>
+          <list>
+            <item>
+              <name>Enable KeyPad as Arrow</name>
+              <sysctl>keyremap4macbook.remap.keypadnumlock</sysctl>
+            </item>
+            <item>
+              <name>Use Clear Key to toggle "KeyPad as Arrow"</name>
+              <sysctl>keyremap4macbook.option.keypadnumlock_togglekey_clear</sysctl>
+            </item>
+          </list>
         </item>
         <item>
           <name>Use PC Style Home/End (behave like Command+Left/Right)</name>

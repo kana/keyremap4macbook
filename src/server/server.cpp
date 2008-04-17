@@ -4,11 +4,12 @@
 #include <sys/uio.h>
 #include <sys/un.h>
 #include <stdio.h>
+#include <unistd.h>
 
 #include "getActiveApplicationName.h"
 #include "server.hpp"
 
-void
+bool
 KeyRemap4MacBook_server::Server::initialize(void)
 {
   // --------------------
@@ -22,7 +23,7 @@ KeyRemap4MacBook_server::Server::initialize(void)
   }
 
   // --------------------
-  makeSocket();
+  return makeSocket();
 }
 
 void
@@ -122,7 +123,10 @@ KeyRemap4MacBook_server::Server::enqueueRequest(int sock)
 void
 KeyRemap4MacBook_server::Server::doLoop(void)
 {
-  initialize();
+  if (! initialize()) return;
+
+  // no more root privilege
+  seteuid(getuid());
 
   listen(listenSocket, 128);
 
@@ -191,9 +195,7 @@ KeyRemap4MacBook_server::Server::do_ActiveApplicationInfo(KeyRemap4MacBook_bridg
   char applicationName[128];
   getActiveApplicationName(applicationName, sizeof(applicationName));
 
-  reply->is_emacs = false;
-  reply->is_terminal = false;
-  reply->is_virtualmachine = false;
+  reply->reset();
 
   if (strcmp(applicationName, "org.gnu.Emacs") == 0 ||
       strcmp(applicationName, "org.gnu.AquamacsEmacs") == 0) {
@@ -204,8 +206,12 @@ KeyRemap4MacBook_server::Server::do_ActiveApplicationInfo(KeyRemap4MacBook_bridg
     reply->is_terminal = true;
   }
   if (strcmp(applicationName, "com.vmware.fusion") == 0 ||
-      strcmp(applicationName, "com.parallels.desktop") == 0) {
+      strcmp(applicationName, "com.parallels.desktop") == 0 ||
+      strcmp(applicationName, "com.microsoft.rdc") == 0) {
     reply->is_virtualmachine = true;
+  }
+  if (strcmp(applicationName, "org.x.X11") == 0) {
+    reply->is_x11 = true;
   }
 
   return KeyRemap4MacBook_bridge::SUCCESS;
