@@ -744,6 +744,16 @@ namespace org_pqrs_KeyRemap4MacBook {
     RemapUtil::modifierToKey(params, ModifierFlag::SHIFT_R, KeyCode::CURSOR_UP);
   }
 
+  void
+  remap_shiftR2backslash(const RemapParams &params)
+  {
+    if (! config.remap_shiftR2backslash) return;
+
+    if (params.ex_origKey != KeyCode::SHIFT_R) return;
+
+    RemapUtil::modifierToKey(params, ModifierFlag::SHIFT_R, KeyCode::BACKSLASH);
+  }
+
   // ----------------------------------------
   void
   remap_tab2exposeALL(const RemapParams &params)
@@ -1882,6 +1892,7 @@ org_pqrs_KeyRemap4MacBook::remap_core(const RemapParams &params)
   remap_shiftR2escape(params);
   remap_shiftR2space(params);
   remap_shiftR2uparrow(params);
+  remap_shiftR2backslash(params);
 
   remap_tab2exposeALL(params);
 

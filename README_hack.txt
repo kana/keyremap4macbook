@@ -28,5 +28,6 @@ these hacks are released under MIT license as follows:
 	SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 This version includes the following hacks:
+- Shift_R to Backslash
 
 __END__

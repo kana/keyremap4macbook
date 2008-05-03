@@ -475,6 +475,10 @@
           <name>Shift_R to Up-Arrow</name>
           <sysctl>keyremap4macbook.remap.shiftR2uparrow</sysctl>
         </item>
+        <item>
+          <name>Shift_R to Backslash</name>
+          <sysctl>keyremap4macbook.remap.shiftR2backslash</sysctl>
+        </item>
       </list>
     </item>
 
