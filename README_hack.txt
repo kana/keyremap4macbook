@@ -28,5 +28,6 @@ these hacks are released under MIT license as follows:
 	SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 This version includes the following hacks:
+- Option_R to Command+Control+Option+Shift+F1
 
 __END__

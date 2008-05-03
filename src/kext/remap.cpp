@@ -554,6 +554,19 @@ namespace org_pqrs_KeyRemap4MacBook {
     RemapUtil::modifierToKey(params, ModifierFlag::OPTION_R, KeyCode::SPACE);
   }
 
+  void
+  remap_optionR2allF1(const RemapParams &params)
+  {
+    if (! config.remap_optionR2allF1) return;
+
+    if (RemapUtil::modifierToKey(params, ModifierFlag::OPTION_R, KeyCode::F1)) {
+      allFlagStatus.commandL.temporary_increase();
+      allFlagStatus.controlL.temporary_increase();
+      allFlagStatus.optionL.temporary_increase();
+      allFlagStatus.shiftL.temporary_increase();
+    }
+  }
+
   // ----------------------------------------
   void
   remap_return2optionL(const RemapParams &params)
@@ -1857,6 +1870,7 @@ org_pqrs_KeyRemap4MacBook::remap_core(const RemapParams &params)
   remap_optionR2forwarddelete(params);
   remap_optionR2semicolon(params);
   remap_optionR2space(params);
+  remap_optionR2allF1(params);
 
   remap_return2optionL(params);
   remap_return2optionL_escape(params);
