@@ -1,13 +1,12 @@
 KeyRemap4MacBook is originally written by tekezo <http://www.pqrs.org/tekezo/>.
 
-This is a copy of KeyRemap4MacBook with some hacks written by kana
-<http://nicht.s8.xrea.com/>.  Obeying the original author's intention
-<http://twitter.com/tekezo/statuses/788948447>, these hacks are released under
-MIT license as follows:
+This is a copy of KeyRemap4MacBook with some hacks written by kana.  Obeying
+the original author's intention <http://twitter.com/tekezo/statuses/788948447>,
+these hacks are released under MIT license as follows:
 
 	The MIT License
 
-	Copyright (c) <year> <copyright holders>
+	Copyright (C) 2008 kana <http://whileimautomaton.net/>
 
 	Permission is hereby granted, free of charge, to any person obtaining
 	a copy of this software and associated documentation files (the
@@ -28,6 +27,6 @@ MIT license as follows:
 	TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 	SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-The following hacks are added:
+This version includes the following hacks:
 
 __END__
