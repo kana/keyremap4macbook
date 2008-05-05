@@ -24,7 +24,7 @@ namespace org_pqrs_KeyRemap4MacBook {
     bool isInternalKeyboard(unsigned int keyboardType);
 
     void modifierToModifier(const RemapParams &params, ModifierFlag::ModifierFlag fromFlag, ModifierFlag::ModifierFlag toFlag);
-    void modifierToKey(const RemapParams &params, ModifierFlag::ModifierFlag fromFlag, KeyCode::KeyCode toKeyCode);
+    bool modifierToKey(const RemapParams &params, ModifierFlag::ModifierFlag fromFlag, KeyCode::KeyCode toKeyCode);
     void keyToModifier(const RemapParams &params, KeyCode::KeyCode fromKeyCode, ModifierFlag::ModifierFlag toFlag);
     void keyToModifier(const RemapParams &params, KeyCode::KeyCode fromKeyCode, ModifierFlag::ModifierFlag toFlag1, ModifierFlag::ModifierFlag toFlag2);
     void keyToKey(const RemapParams &params, KeyCode::KeyCode fromKeyCode, KeyCode::KeyCode toKeyCode);
@@ -141,7 +141,7 @@ namespace org_pqrs_KeyRemap4MacBook {
   class ListFireExtraKey {
   public:
     enum {
-      FIREEXTRAKEY_MAXNUM = 4,
+      FIREEXTRAKEY_MAXNUM = 16,
     };
     void reset(void);
     void add(FireExtraKey::Type type, unsigned int eventType, unsigned int flags, unsigned int key, unsigned int charCode);

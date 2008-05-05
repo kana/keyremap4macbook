@@ -224,13 +224,14 @@ namespace org_pqrs_KeyRemap4MacBook {
     *(params.key) = toKeyCode;
   }
 
-  void
+  // Return true if the specified key is mapped, otherwise return false.
+  bool
   RemapUtil::modifierToKey(const RemapParams &params, ModifierFlag::ModifierFlag fromFlag, KeyCode::KeyCode toKeyCode) {
     KeyCode::KeyCode fromKeyCode = getModifierKeyCode(fromFlag);
-    if (params.ex_origKey != fromKeyCode || *(params.key) != fromKeyCode) return;
+    if (params.ex_origKey != fromKeyCode || *(params.key) != fromKeyCode) return false;
 
     FlagStatus *fromStatus = allFlagStatus.getFlagStatus(fromFlag);
-    if (fromStatus == NULL) return;
+    if (fromStatus == NULL) return false;
 
     if (isModifierOn(params, fromFlag)) {
       fromStatus->decrease();
@@ -241,6 +242,7 @@ namespace org_pqrs_KeyRemap4MacBook {
     }
 
     *(params.key) = toKeyCode;
+    return true;
   }
 
   void

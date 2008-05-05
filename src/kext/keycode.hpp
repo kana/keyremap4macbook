@@ -167,6 +167,7 @@ namespace org_pqrs_KeyRemap4MacBook {
       COMMAND_L = 0,
       CONTROL_L = 0,
       OPTION_L = 0,
+      SHIFT_L = 0,
       FN = 0,
       TAB = 9,
       RETURN = 13,
@@ -179,6 +180,8 @@ namespace org_pqrs_KeyRemap4MacBook {
       CURSOR_UP = 173,
       CURSOR_RIGHT = 174,
       CURSOR_DOWN = 175,
+
+      F1 = 32,
 
       JIS_KANA = 0,
       JIS_EISUU = 0,
