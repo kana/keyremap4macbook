@@ -560,10 +560,35 @@ namespace org_pqrs_KeyRemap4MacBook {
     if (! config.remap_optionR2allF1) return;
 
     if (RemapUtil::modifierToKey(params, ModifierFlag::OPTION_R, KeyCode::F1)) {
-      allFlagStatus.commandL.temporary_increase();
-      allFlagStatus.controlL.temporary_increase();
-      allFlagStatus.optionL.temporary_increase();
-      allFlagStatus.shiftL.temporary_increase();
+      allFlagStatus.reset();
+      if (*(params.eventType) == KeyEvent::DOWN) {
+        allFlagStatus.commandL.temporary_increase();
+	listFireExtraKey.add(FireExtraKey::TYPE_AFTER, KeyEvent::MODIFY, allFlagStatus.makeFlags(params), KeyCode::COMMAND_L, CharCode::COMMAND_L);
+        allFlagStatus.controlL.temporary_increase();
+	listFireExtraKey.add(FireExtraKey::TYPE_AFTER, KeyEvent::MODIFY, allFlagStatus.makeFlags(params), KeyCode::CONTROL_L, CharCode::CONTROL_L);
+        allFlagStatus.optionL.temporary_increase();
+	listFireExtraKey.add(FireExtraKey::TYPE_AFTER, KeyEvent::MODIFY, allFlagStatus.makeFlags(params), KeyCode::OPTION_L, CharCode::OPTION_L);
+        allFlagStatus.shiftL.temporary_increase();
+	listFireExtraKey.add(FireExtraKey::TYPE_AFTER, KeyEvent::MODIFY, allFlagStatus.makeFlags(params), KeyCode::SHIFT_L, CharCode::SHIFT_L);
+
+	listFireExtraKey.add(FireExtraKey::TYPE_AFTER, KeyEvent::DOWN, allFlagStatus.makeFlags(params), KeyCode::F1, CharCode::F1);
+      } else {
+        allFlagStatus.commandL.temporary_increase();
+        allFlagStatus.controlL.temporary_increase();
+        allFlagStatus.optionL.temporary_increase();
+        allFlagStatus.shiftL.temporary_increase();
+	listFireExtraKey.add(FireExtraKey::TYPE_AFTER, KeyEvent::UP, allFlagStatus.makeFlags(params), KeyCode::F1, CharCode::F1);
+
+        allFlagStatus.shiftL.temporary_decrease();
+	listFireExtraKey.add(FireExtraKey::TYPE_AFTER, KeyEvent::MODIFY, allFlagStatus.makeFlags(params), KeyCode::SHIFT_L, CharCode::SHIFT_L);
+        allFlagStatus.optionL.temporary_decrease();
+	listFireExtraKey.add(FireExtraKey::TYPE_AFTER, KeyEvent::MODIFY, allFlagStatus.makeFlags(params), KeyCode::OPTION_L, CharCode::OPTION_L);
+        allFlagStatus.controlL.temporary_decrease();
+	listFireExtraKey.add(FireExtraKey::TYPE_AFTER, KeyEvent::MODIFY, allFlagStatus.makeFlags(params), KeyCode::CONTROL_L, CharCode::CONTROL_L);
+        allFlagStatus.commandL.temporary_decrease();
+	listFireExtraKey.add(FireExtraKey::TYPE_AFTER, KeyEvent::MODIFY, allFlagStatus.makeFlags(params), KeyCode::COMMAND_L, CharCode::COMMAND_L);
+      }
+      *(params.ex_dropKey) = true;
     }
   }
 

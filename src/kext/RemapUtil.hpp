@@ -141,7 +141,7 @@ namespace org_pqrs_KeyRemap4MacBook {
   class ListFireExtraKey {
   public:
     enum {
-      FIREEXTRAKEY_MAXNUM = 4,
+      FIREEXTRAKEY_MAXNUM = 16,
     };
     void reset(void);
     void add(FireExtraKey::Type type, unsigned int eventType, unsigned int flags, unsigned int key, unsigned int charCode);
